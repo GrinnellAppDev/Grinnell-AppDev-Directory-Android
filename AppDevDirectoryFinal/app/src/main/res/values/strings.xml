@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_settings">Settings</string>
+    <string name="app_name">Grinnell AppDev</string>
+    <string name="drawer_open">Open drawer</string>
+    <string name="drawer_close">Close drawer</string>
+
+    <!-- Nav Drawer Menu Items -->
+    <string-array name="drawer_titles">
+        <item> Directory </item>
+        <item> Social Media </item>
+        <item> About </item>
+        <item> Contact Us </item>
+    </string-array>
+
+    <!-- strings for swipable Directory-->
+    <string name="title_section1_directory"> Community </string>
+    <string name="title_section2_directory"> Design </string>
+    <string name="title_section3_directory"> Development</string>
+    <string name="title_section4_directory"> Leaders </string>
+    <string name="title_section5_directory"> Past </string>
+    <!--strings for swipable About-->
+    <string name="title_section1_about"> Mission Statement </string>
+    <string name="title_section2_about"> History </string>
+    <!--strings for swipable Contact-->
+    <string name="title_section1_contact"> App Request </string>
+    <string name="title_section2_contact"> Trainee Request </string>
+</resources>

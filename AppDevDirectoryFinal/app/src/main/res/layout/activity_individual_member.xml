@@ -1,0 +1,158 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    tools:context="com.appdev.appdevdirectory.IndividualMemberActivity"
+    tools:ignore="MergeRootFrame" >
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="70dp"
+            android:background="#F26244"
+            android:id="@+id/toprow"></LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/content"
+            android:layout_centerVertical="true"
+            android:gravity="start">
+
+            <ImageView
+                android:id="@+id/imageView1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/name"
+                android:scaleType="fitCenter"
+                android:src="@drawable/nopic"
+                android:layout_gravity="center_horizontal" />
+
+            <TextView
+                android:id="@+id/name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:gravity="center"
+                android:text="name"
+                android:textColor="#000000"
+                android:textSize="48dp"
+                android:layout_gravity="center_horizontal" />
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal">
+
+                <TextView
+                    android:id="@+id/major"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:gravity="center"
+                    android:text="major"
+                    android:textColor="#000000"
+                    android:textSize="48dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginRight="20dp" />
+
+                <TextView
+                    android:id="@+id/year"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:gravity="center"
+                    android:text="year"
+                    android:textColor="#000000"
+                    android:textSize="48dp"
+                    android:layout_gravity="center_horizontal" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/role"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:gravity="center"
+                android:text="role"
+                android:textColor="#000000"
+                android:textSize="48dp"
+                android:layout_gravity="center_horizontal"
+                android:singleLine="true" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/linearLayout">
+
+        <LinearLayout
+            android:id="@+id/linearLayout2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <ImageButton
+                android:id="@+id/linkedButton"
+                android:layout_width="50dip"
+                android:layout_height="50dip"
+                android:background="@drawable/linkedlogo" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayout3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+
+            <ImageButton
+                android:id="@+id/homeButton"
+                android:layout_width="50dip"
+                android:layout_height="50dip"
+                android:background="@drawable/home_page" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayout1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <ImageButton
+                android:id="@+id/gitHubButton"
+                android:layout_width="50dip"
+                android:layout_height="50dip"
+                android:background="@drawable/githublogo" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <ImageButton
+                android:id="@+id/twitterButton"
+                android:layout_width="50dip"
+                android:layout_height="50dip"
+                android:background="@drawable/twitter_logo" />
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>
