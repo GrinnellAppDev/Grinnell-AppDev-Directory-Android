@@ -1,94 +1,122 @@
 package com.grinnellappdev.hinchmanowusu.appdevdirectoryfinal.About;
 
 
+import android.annotation.SuppressLint;
+import android.app.ActionBar;
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
+import android.view.MenuItem;
 
-import com.grinnellappdev.hinchmanowusu.appdevdirectoryfinal.R;
+import com.grinnellappdev.hinchmanowusu.appdevdirectory.R;
+import com.grinnellappdev.hinchmanowusu.info.androidhive.tabsswipe.adapter.AboutTabsPagerAdapter;
 
-import java.util.Locale;
-
-public class About extends Fragment {
-
-    public static final String TAG = Fragment.class.getSimpleName();
-    AboutPagerAdapter mAboutPagerAdapter;
-    ViewPager mViewPager;
-
-    public static Fragment newInstance() {
-        return new Fragment();
-    }
-
+/**
+ * Created by Amanda Hinchman-Dominguez on 1/13/2015.
+ *
+ * About Activity
+ */
+@SuppressLint("NewApi")
+public class AboutActivity extends FragmentActivity implements ActionBar.TabListener {
+    private ViewPager viewPager;
+    private AboutTabsPagerAdapter mAdapter;
+    private ActionBar actionBar;
+    // Tab titles
+    private String[] tabs = { "Mission Statement", "Funding", "History" };
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-    }
+        setContentView(R.layout.about_activity);
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.about, container, false);
-        mAboutPagerAdapter = new AboutPagerAdapter(getChildFragmentManager());
+        // Initialization
+        viewPager = (ViewPager) findViewById(R.id.pager);
+        actionBar = getActionBar();
+        mAdapter = new AboutTabsPagerAdapter(getSupportFragmentManager());
 
-        mViewPager = (ViewPager) v.findViewById(R.id.pager);
-        mViewPager.setAdapter(mAboutPagerAdapter);
+        viewPager.setAdapter(mAdapter);
+        actionBar.setHomeButtonEnabled(true);
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
-        return v;
-    }// onCreateView(LayoutInflater, ViewGroup, Bundle)
-
-    public class AboutPagerAdapter extends FragmentPagerAdapter {
-
-        public AboutPagerAdapter(FragmentManager fm) {
-            super(fm);
-        } // AboutPagerAdapter(FragmentManager)
-
-        @Override
-        public Fragment getItem(int position) {
-            Fragment fragment = new AboutContentFragment();
-            Bundle args = new Bundle();
-            args.putInt(AboutContentFragment.ARG_SECTION_NUMBER, position + 1);
-            fragment.setArguments(args);
-            return fragment;
-        }// getItem(int)
-
-        @Override
-        public int getCount() {
-            return 2;
-        }// getCount()
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            Locale l = Locale.getDefault();
-            switch(position) {
-                case 0:
-                    return getString(R.string.title_section1_about).toUpperCase(l);
-                case 1:
-                    return getString(R.string.title_section2_about).toUpperCase(l);
-            }
-            return null;
-        }// getPageTitle(int)
-    } //class AboutPagerAdapter
-
-    public static class AboutContentFragment extends Fragment {
-
-        public static final String ARG_SECTION_NUMBER="section_number";
-
-        public AboutContentFragment() {
+        // Adding Tabs
+        for (String tab_name : tabs) {
+            actionBar.addTab(actionBar.newTab().setText(tab_name)
+                    .setTabListener(this));
         }
 
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.about_content, container, false);
-            TextView dummyTextView = (TextView) rootView.findViewById(R.id.section_label_about);
-            dummyTextView.setText(Integer.toString(getArguments().getInt(
-                    ARG_SECTION_NUMBER)));
-            return rootView;
-        }// onCreateView(LayoutInflater, ViewGroup, Bundle)
-    }//class AboutContentFragment
-}//class About
+        /**
+         * on swiping the viewpager make respective tab selected
+         * */
+        viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+
+            @Override
+            public void onPageSelected(int position) {
+                // on changing the page
+                // make respected tab selected
+                actionBar.setSelectedNavigationItem(position);
+            }
+
+            @Override
+            public void onPageScrolled(int arg0, float arg1, int arg2) {
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int arg0) {
+            }
+        });
+    }
+
+    public class AboutTabsPagerAdapter extends FragmentPagerAdapter {
+        public AboutTabsPagerAdapter (FragmentManager fm) {
+            super(fm);
+        }
+
+        public Fragment getItem(int index) {
+            switch (index) {
+                case 0:
+                    // MissionStatement ListFragment activity
+                    return new FragmentMissionStatement();
+                case 1:
+                    // History ListFragment activity
+                    return new FragmentHistory();
+            }
+            return null;
+        }
+
+        public int getCount() {
+            // get item count for the number of tabs
+            return 3;
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+            default:
+                super.onOptionsItemSelected(item);
+        }
+        return true;
+    }
+
+    @Override
+    public void onTabReselected(ActionBar.Tab tab, FragmentTransaction ft) {
+    }
+
+    @Override
+    public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft) {
+        // on tab selected
+        // show respected fragment view
+        viewPager.setCurrentItem(tab.getPosition());
+    }
+
+    @Override
+    public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction ft) {
+    }
+}
