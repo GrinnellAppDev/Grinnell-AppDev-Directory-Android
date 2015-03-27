@@ -1,24 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<android.support.v4.view.ViewPager xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/pager_about"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".TabbedFragment" >
-    <!--
-    This title strip will display the currently visible page title, as well as the page titles for
-    adjacent pages
-    -->
+<LinearLayout
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="#FFFFFF">
 
-    <android.support.v4.view.PagerTitleStrip
-        android:id="@+id/pager_title_strip_about"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="top"
-        android:background="#33b5e5"
-        android:paddingBottom="4dp"
-        android:paddingTop="4dp"
-        android:textColor="#fff" />
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="70dp"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="About"
+        android:id="@+id/about_title"
+        android:background="#F26244"
+        android:gravity="center"
+        android:typeface="sans"
+        android:textSize="40dp" />
 
-</android.support.v4.view.ViewPager>
+    <ScrollView
+        android:layout_width="347dp"
+        android:layout_height="fill_parent"
+        android:id="@+id/scrollView2"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:fillViewport="false">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:weightSum="1">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="mission:"
+                android:id="@+id/textView"
+                android:textColor="#F26244"
+                android:textSize="30dp" />
+
+            <TextView
+                android:layout_width="315dp"
+                android:layout_height="371dp"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Grinnell AppDev is a student organization dedicated to created software applications to serve both students and the larger Grinnell community.  We believe that a collaborative and engaging creation environment not only produces the best applications but also provides valuable experience and skillsets for Grinnell graduates to take with them on any career path.  Since 2012 Grinnell AppDev has trained the next generation of programmers an entrepreneurs to create and publicize a wide variety of products."
+                android:id="@+id/mission_statement"
+                android:layout_marginTop="20dp"
+                android:textSize="23dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_weight="14.82" />
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

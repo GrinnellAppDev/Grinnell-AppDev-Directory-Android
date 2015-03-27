@@ -14,7 +14,6 @@ public class Contactus extends Fragment {
     public Contactus() {
     }
 
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 

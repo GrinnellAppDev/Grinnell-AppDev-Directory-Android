@@ -2,12 +2,15 @@ package com.grinnellappdev.hinchmanowusu.appdevdirectoryfinal;
 
 import java.util.ArrayList;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.FragmentManager;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.content.res.Configuration;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
@@ -42,6 +45,9 @@ public class MainActivity extends Activity {
     private ArrayList<DrawerItem> navDrawerItems;
     CustomDrawerAdapter adapter;
 
+    //customize the color of the actionbar
+    //ActionBar bar = getActionBar();
+    //bar.setBackgroundResource(new ColorDrawable("#C14E36")); setBackgroundResource is not recognized
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -177,8 +183,7 @@ public class MainActivity extends Activity {
 
     @Override
     public void setTitle(CharSequence title) {
-        mTitle = title;
-        getActionBar().setTitle(mTitle);
+        getActionBar().setTitle("Grinnell AppDev");
     }//setTitle(CharSequence)
 
 
