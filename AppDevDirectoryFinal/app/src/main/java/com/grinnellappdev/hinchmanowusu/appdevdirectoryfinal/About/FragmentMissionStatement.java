@@ -16,10 +16,6 @@ import com.grinnellappdev.hinchmanowusu.appdevdirectoryfinal.R;
  */
 public class FragmentMissionStatement extends Fragment {
 
-    public static FragmentMissionStatement newInstance() {
-        return new FragmentMissionStatement();
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

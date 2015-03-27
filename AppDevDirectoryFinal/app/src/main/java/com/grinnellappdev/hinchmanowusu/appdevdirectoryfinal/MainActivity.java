@@ -2,15 +2,16 @@ package com.grinnellappdev.hinchmanowusu.appdevdirectoryfinal;
 
 import java.util.ArrayList;
 
-import android.support.v4.app.FragmentManager;
+import android.app.Activity;
+import android.app.FragmentManager;
 import android.os.Bundle;
 import android.content.res.Configuration;
 import android.support.v4.app.ActionBarDrawerToggle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
+import android.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -21,7 +22,7 @@ import com.grinnellappdev.hinchmanowusu.appdevdirectoryfinal.About.About;
 import com.grinnellappdev.hinchmanowusu.appdevdirectoryfinal.ContactUs.Contactus;
 import com.grinnellappdev.hinchmanowusu.appdevdirectoryfinal.Model.DrawerItem;
 
-public class MainActivity extends FragmentActivity {
+public class MainActivity extends Activity {
 
     private static final String TAG = MainActivity.class.getSimpleName();
 
@@ -29,12 +30,14 @@ public class MainActivity extends FragmentActivity {
     private ListView mDrawerList;
     private ActionBarDrawerToggle mDrawerToggle;
 
-    //nav drawer title
+    // nav drawer title
     private CharSequence mDrawerTitle;
+
+    // used to store app title
     private CharSequence mTitle;
 
-    //slide menu items
-    private String[] mDrawerItems;
+    // slide menu items
+    private String[] navMenuTitles;
 
     private ArrayList<DrawerItem> navDrawerItems;
     CustomDrawerAdapter adapter;
@@ -47,81 +50,139 @@ public class MainActivity extends FragmentActivity {
 
         mTitle = mDrawerTitle = getTitle();
 
-        //load slide menu items
-        mDrawerItems = getResources().getStringArray(R.array.drawer_titles);
+        // load slide menu items
+        navMenuTitles = getResources().getStringArray(R.array.nav_drawer_items);
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
 
         navDrawerItems = new ArrayList<DrawerItem>();
 
-        //set a custom shadow that overlays the main content when the drawer opens
+        // set a custom shadow that overlays the main content when the drawer opens
         mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow,
                 GravityCompat.START);
 
-        navDrawerItems.add(new DrawerItem(mDrawerItems[0]));
-        navDrawerItems.add(new DrawerItem(mDrawerItems[1]));
-        navDrawerItems.add(new DrawerItem(mDrawerItems[2]));
-        navDrawerItems.add(new DrawerItem(mDrawerItems[3]));
+        // adding nav drawer items to array
+        navDrawerItems.add(new DrawerItem(navMenuTitles[0]));
+        navDrawerItems.add(new DrawerItem(navMenuTitles[1]));
+        navDrawerItems.add(new DrawerItem(navMenuTitles[2]));
+        navDrawerItems.add(new DrawerItem(navMenuTitles[3]));
 
-        //setting the nav drawer list adapter
+        mDrawerList.setOnItemClickListener(new SlideMenuItemClickListener());
+
+        // setting the nav drawer list adapter
         adapter = new CustomDrawerAdapter(getApplicationContext(),
                 navDrawerItems);
         mDrawerList.setAdapter(adapter);
+        //mDrawerList.setAdapter(new ArrayAdapter<String>(this, R.layout.drawer_list_item, navMenuTitles));
 
-        //Add items to the ListView
-        mDrawerList.setAdapter(new ArrayAdapter<String>(this, R.layout.drawer_list_item, mDrawerItems));
-        //Set the onItemClickListener so something happens when a user clicks on an item.
-        mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
-
-        //Enable ActionBar app icon to behave as action to toggle the Navigation Drawer
+        //enabling action bar app icon and behaving it as toggle button
         getActionBar().setDisplayHomeAsUpEnabled(true);
         getActionBar().setHomeButtonEnabled(true);
 
-        mDrawerToggle = new ActionBarDrawerToggle
-                (this,
-                 mDrawerLayout,
-                R.drawable.ic_drawer,
-                R.string.drawer_open,
-                R.string.drawer_close) {
+        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
+                R.drawable.ic_drawer, // nav menu toggle icon
+                R.string.drawer_open, // nav drawer open
+                R.string.drawer_close) { //nav drawer close
             public void onDrawerClosed(View view) {
                 getActionBar().setTitle(mTitle);
-                invalidateOptionsMenu(); // creates call to
-                // onPrepareOptionsMenu()
+                // calling onPrepareOptionsMenu() to show action bar icons
+                invalidateOptionsMenu();
             }
 
             public void onDrawerOpened(View drawerView) {
                 getActionBar().setTitle(mDrawerTitle);
-                invalidateOptionsMenu(); // creates call to
-                // onPrepareOptionsMenu()
+                // calling onPrepareOptionsMenu() to hide action bar icons
+                invalidateOptionsMenu();
             }
         };
-
         mDrawerLayout.setDrawerListener(mDrawerToggle);
 
-        // set the default content area to item 0
-        // when the app opens for the first time
         if (savedInstanceState == null) {
-            navigateTo(0);
-        }
+            displayView(0);
+        }// if
+    }// onCreate(Bundle)
 
-    }//onCreate(Bundle)
+    private class SlideMenuItemClickListener implements ListView.OnItemClickListener {
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            // display view for selected nav drawer item
+            displayView(position);
+        }
+    }//class DrawerItemClickListener
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }// onOptionsItemSelected(MenuItem)
+
+
     public boolean onOptionsItemSelected(MenuItem item) {
         // toggle nav drawer on selecting action bar app icon/title
-        if(mDrawerToggle.onOptionsItemSelected(item)) {
+        if (mDrawerToggle.onOptionsItemSelected(item)) {
             return true;
         }
-        //handle action bar actions click
+        // Handle action bar actions click
         switch(item.getItemId()) {
             case R.id.action_settings:
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
-    }
+    }// onOptionsItemSelected(MenuItem)
 
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        //if nav drawer is opened, hide the action items
+        boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
+        menu.findItem(R.id.action_settings).setVisible(!drawerOpen);
+        return super.onPrepareOptionsMenu(menu);
+    }// onPrepareOptionsMenu
+
+    // Displaying fragment view for selected nav drawer list item
+    private void displayView(int position) {
+       //update the main content by replacing fragments
+        Fragment fragment = null;
+        switch(position) {
+            case 0:
+                //fragment = new Directory();
+                break;
+            case 1:
+                //fragment = new SocialMedia();
+                break;
+            case 2:
+                fragment = new About();
+                break;
+            case 3:
+                fragment = new Contactus();
+                break;
+            default:
+                break;
+        }// switch
+
+        if (fragment != null) {
+            FragmentManager fragmentManager = getFragmentManager();
+            fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
+
+            // update selected item and title, then close the drawer
+            mDrawerList.setItemChecked(position, true);
+            mDrawerList.setSelection(position);
+            setTitle(navMenuTitles[position]);
+            mDrawerLayout.closeDrawer(mDrawerList);
+        } else {
+            //error in creating fragment
+            Log.e("MainActivity", "Error in creating fragment");
+        }
+    }//displayView(int)
+
+    @Override
+    public void setTitle(CharSequence title) {
+        mTitle = title;
+        getActionBar().setTitle(mTitle);
+    }//setTitle(CharSequence)
+
+
+    // When using the ActionBarDrawerToggle, you must call it during onPostCreate() and onConfigurationChanged()
     @Override
     public void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
@@ -133,56 +194,5 @@ public class MainActivity extends FragmentActivity {
         super.onConfigurationChanged(newConfig);
         mDrawerToggle.onConfigurationChanged(newConfig);
     }//onConfigurationChanged(Configuration)
-
-    private class DrawerItemClickListener implements AdapterView.OnItemClickListener {
-        @Override
-        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            navigateTo(position);
-        }
-    }//class DrawerItemClickListener
-
-    private void navigateTo(int position) {
-        Fragment fragment = null;
-        switch(position) {
-            case 0: //getSupportFragmentManager()
-                    //.beginTransaction()
-                    //.replace(R.id.content_frame, Directory.newInstance(), Directory.TAG).commit();
-                    break;
-            case 1: //getSupportFragmentManager()
-                    //.beginTransaction()
-                    //.replace(R.id.content_frame, SocialMedia.newInstance(), SocialMedia.TAG).commit();
-                break;
-            case 2: getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.content_frame, About.newInstance(), About.TAG).commit();
-                    fragment = new About();
-                break;
-            case 3: getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.content_frame, Contactus.newInstance(), Contactus.TAG).commit();
-                    fragment = new Contactus();
-                break;
-        }
-
-        if(fragment != null){
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
-
-            //update selected item and title, then close the drawer
-            mDrawerList.setItemChecked(position, true);
-            mDrawerList.setSelection(position);
-            mDrawerLayout.closeDrawer(mDrawerList);
-        } else {
-            //error in creating fragment
-            Log.e("MainActivity", "Error in creating fragment");
-        }
-        mDrawerLayout.closeDrawer(mDrawerList);
-    }//navigateTo(int)
-
-    @Override
-    public void setTitle(CharSequence title) {
-        mTitle = title;
-        getActionBar().setTitle(mTitle);
-    }//setTitle(CharSequence)
 
 }//class MainActivity

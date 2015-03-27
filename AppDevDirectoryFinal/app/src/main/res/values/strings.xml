@@ -6,7 +6,7 @@
     <string name="drawer_close">Close drawer</string>
 
     <!-- Nav Drawer Menu Items -->
-    <string-array name="drawer_titles">
+    <string-array name="nav_drawer_items">
         <item> Directory </item>
         <item> Social Media </item>
         <item> About </item>

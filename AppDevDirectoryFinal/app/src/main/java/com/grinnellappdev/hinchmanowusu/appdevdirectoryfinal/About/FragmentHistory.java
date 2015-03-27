@@ -16,15 +16,11 @@ import android.view.ViewGroup;
  */
 public class FragmentHistory extends Fragment {
 
-    public static FragmentMissionStatement newInstance() {
-        return new FragmentMissionStatement();
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_mission_statement, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_history, container, false);
 
         return rootView;
     } // onCreateView
-}
+}//class FragmentHistory
